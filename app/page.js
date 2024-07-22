@@ -1,113 +1,93 @@
-import Image from "next/image";
+'use client'
+import { SiGitbook } from "react-icons/si";
+import { CiLocationOn } from "react-icons/ci";
+import { useEffect, useState } from "react";
+import SearchButton from "./_components/SearchButton";
+import LocationButton from "./_components/LocationButton";
+import OnlineButton from "./_components/OnlineButton";
+import { BookText, MapPin } from "lucide-react";
 
 export default function Home() {
+  
+
+  const [mekan,setMekan] = useState("")
+  const [firstClick,setFirstClick] = useState(false)
+  const [isFocus,setIsFocus] = useState(false)
+  const list = ['Ingilizce' , 'Matematik' , 'Yüzme' , 'Almanca' , 'Piyano' , 'Türkçe' , 'Gitar' , 'Tenis']
+  const [selectedAlan , setSelectedAlan] = useState(1)
+  const [alan,setAlan] = useState(`Deneyin "${list[0]}"`)
+  const [isClicked , setIsClicked ] = useState(false)
+  const [time,setTime] = useState()
+
+  function changeAlan(){
+    console.log(isClicked);
+    if(!isClicked && alan !== ""){
+      if(selectedAlan>0 && selectedAlan < 8  ){
+        let t = setTimeout(function () {
+          setSelectedAlan(selectedAlan+1)
+          setAlan(`Deneyin "${list[selectedAlan]}"`)
+        }, 2000)
+        setTime(t)
+      }else {
+        setSelectedAlan(1)
+      }
+    }else{
+      // setAlan("")
+      clearTimeout(time)
+      setIsClicked(true)
+    }
+  }
+  
+  useEffect(() => {
+      changeAlan()
+  },[alan])
+
+
   return (
-    <main className="flex min-h-screen flex-col items-center justify-between p-24">
-      <div className="z-10 max-w-5xl w-full items-center justify-between font-mono text-sm lg:flex">
-        <p className="fixed left-0 top-0 flex w-full justify-center border-b border-gray-300 bg-gradient-to-b from-zinc-200 pb-6 pt-8 backdrop-blur-2xl dark:border-neutral-800 dark:bg-zinc-800/30 dark:from-inherit lg:static lg:w-auto  lg:rounded-xl lg:border lg:bg-gray-200 lg:p-4 lg:dark:bg-zinc-800/30">
-          Get started by editing&nbsp;
-          <code className="font-mono font-bold">app/page.js</code>
-        </p>
-        <div className="fixed bottom-0 left-0 flex h-48 w-full items-end justify-center bg-gradient-to-t from-white via-white dark:from-black dark:via-black lg:static lg:h-auto lg:w-auto lg:bg-none">
-          <a
-            className="pointer-events-none flex place-items-center gap-2 p-8 lg:pointer-events-auto lg:p-0"
-            href="https://vercel.com?utm_source=create-next-app&utm_medium=appdir-template&utm_campaign=create-next-app"
-            target="_blank"
-            rel="noopener noreferrer"
-          >
-            By{" "}
-            <Image
-              src="/vercel.svg"
-              alt="Vercel Logo"
-              className="dark:invert"
-              width={100}
-              height={24}
-              priority
-            />
-          </a>
-        </div>
-      </div>
-
-      <div className="relative flex place-items-center before:absolute before:h-[300px] before:w-full sm:before:w-[480px] before:-translate-x-1/2 before:rounded-full before:bg-gradient-radial before:from-white before:to-transparent before:blur-2xl before:content-[''] after:absolute after:-z-20 after:h-[180px] after:w-full sm:after:w-[240px] after:translate-x-1/3 after:bg-gradient-conic after:from-sky-200 after:via-blue-200 after:blur-2xl after:content-[''] before:dark:bg-gradient-to-br before:dark:from-transparent before:dark:to-blue-700 before:dark:opacity-10 after:dark:from-sky-900 after:dark:via-[#0141ff] after:dark:opacity-40 before:lg:h-[360px] z-[-1]">
-        <Image
-          className="relative dark:drop-shadow-[0_0_0.3rem_#ffffff70] dark:invert"
-          src="/next.svg"
-          alt="Next.js Logo"
-          width={180}
-          height={37}
-          priority
-        />
-      </div>
-
-      <div className="mb-32 grid text-center lg:max-w-5xl lg:w-full lg:mb-0 lg:grid-cols-4 lg:text-left">
-        <a
-          href="https://nextjs.org/docs?utm_source=create-next-app&utm_medium=appdir-template&utm_campaign=create-next-app"
-          className="group rounded-lg border border-transparent px-5 py-4 transition-colors hover:border-gray-300 hover:bg-gray-100 hover:dark:border-neutral-700 hover:dark:bg-neutral-800/30"
-          target="_blank"
-          rel="noopener noreferrer"
-        >
-          <h2 className={`mb-3 text-2xl font-semibold`}>
-            Docs{" "}
-            <span className="inline-block transition-transform group-hover:translate-x-1 motion-reduce:transform-none">
-              -&gt;
-            </span>
-          </h2>
-          <p className={`m-0 max-w-[30ch] text-sm opacity-50`}>
-            Find in-depth information about Next.js features and API.
-          </p>
-        </a>
-
-        <a
-          href="https://nextjs.org/learn?utm_source=create-next-app&utm_medium=appdir-template-tw&utm_campaign=create-next-app"
-          className="group rounded-lg border border-transparent px-5 py-4 transition-colors hover:border-gray-300 hover:bg-gray-100 hover:dark:border-neutral-700 hover:dark:bg-neutral-800 hover:dark:bg-opacity-30"
-          target="_blank"
-          rel="noopener noreferrer"
-        >
-          <h2 className={`mb-3 text-2xl font-semibold`}>
-            Learn{" "}
-            <span className="inline-block transition-transform group-hover:translate-x-1 motion-reduce:transform-none">
-              -&gt;
-            </span>
-          </h2>
-          <p className={`m-0 max-w-[30ch] text-sm opacity-50`}>
-            Learn about Next.js in an interactive course with&nbsp;quizzes!
-          </p>
-        </a>
-
-        <a
-          href="https://vercel.com/templates?framework=next.js&utm_source=create-next-app&utm_medium=appdir-template&utm_campaign=create-next-app"
-          className="group rounded-lg border border-transparent px-5 py-4 transition-colors hover:border-gray-300 hover:bg-gray-100 hover:dark:border-neutral-700 hover:dark:bg-neutral-800/30"
-          target="_blank"
-          rel="noopener noreferrer"
-        >
-          <h2 className={`mb-3 text-2xl font-semibold`}>
-            Templates{" "}
-            <span className="inline-block transition-transform group-hover:translate-x-1 motion-reduce:transform-none">
-              -&gt;
-            </span>
-          </h2>
-          <p className={`m-0 max-w-[30ch] text-sm opacity-50`}>
-            Explore starter templates for Next.js.
-          </p>
-        </a>
-
-        <a
-          href="https://vercel.com/new?utm_source=create-next-app&utm_medium=appdir-template&utm_campaign=create-next-app"
-          className="group rounded-lg border border-transparent px-5 py-4 transition-colors hover:border-gray-300 hover:bg-gray-100 hover:dark:border-neutral-700 hover:dark:bg-neutral-800/30"
-          target="_blank"
-          rel="noopener noreferrer"
-        >
-          <h2 className={`mb-3 text-2xl font-semibold`}>
-            Deploy{" "}
-            <span className="inline-block transition-transform group-hover:translate-x-1 motion-reduce:transform-none">
-              -&gt;
-            </span>
-          </h2>
-          <p className={`m-0 max-w-[30ch] text-sm opacity-50 text-balance`}>
-            Instantly deploy your Next.js site to a shareable URL with Vercel.
-          </p>
-        </a>
-      </div>
+    <main className="bg-gradient-to-t from-yellow-200 flex flex-col gap-10 justify-center items-center  h-[100vh]">
+      
+        <form action="" className="bg-white px-4 py-2 rounded-3xl flex justify-center items-center gap-3">
+          <div className="flex justify-center items-center gap-3 relative">
+            <label htmlFor="Alan"><BookText  className="text-red-300" /></label>
+            <input onFocus={(e) => {
+              setIsClicked(true)
+              setAlan("")
+              setIsFocus(true)
+            }} id="Alan" type="text" onClick={() => {
+              setIsClicked(true)
+              setAlan("")
+              setFirstClick(true)
+              }} value={alan} onChange={(event) => setAlan(event.target.value)} className="outline-none hover:cursor-pointer" placeholder={`Deneyin "${list[0]}"`} />
+            {
+              firstClick && isFocus && <>
+              <div className="absolute bg-white mt-[360px]  py-2 rounded-2xl w-56">
+                <ul className=" w-56 rounded-2xl p-3">
+                {
+                  list.map((item,index) => <li><SearchButton key={index} setAlan={setAlan} name={`${item}`} /></li>)
+                }
+                </ul>
+              </div>
+              </>
+            }
+          </div>
+            {/* Tıklama işlemine göre yönlendirme */}
+            <div className="flex justify-center items-center gap-3 relative">
+              <label htmlFor="Mekan" className={`flex ${firstClick ? 'visible' : 'invisible'}`}>|<MapPin className="text-red-300" size={25} /></label>
+              <input type="text" onFocus={(e)=> setIsFocus(false)} id="Mekan" placeholder={"Ders Mekanı"} value={mekan} onChange={(event) => setMekan(event.target.value)} className={`outline-none ${firstClick ? 'visible' : 'invisible'}`} />
+              {
+              firstClick && !isFocus &&  <>
+              <div className="absolute bg-white mt-[166px]  py-2 rounded-2xl w-64">
+                <ul className="w-64 rounded-2xl p-3">
+                  <li><LocationButton  /></li>
+                  <li><OnlineButton/></li>
+                </ul>
+              </div>
+              </>
+            }
+            </div>
+            
+          <button className="bg-red-500 text-white px-4 py-2 rounded-3xl hover:scale-110 duration-300 ">Ara</button>
+        </form>
     </main>
   );
 }
